@@ -1,26 +1,47 @@
-# QA Selenium Automation with Python
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-## Objective
-Create a Selenium automation script in Python to validate search functionality on the **Selenium Playground** website.
 
-> [!NOTE]
-> **Deliverables:**
-> 1. A Python script (`qa_selenium_test.py`) that:
->    - Navigates to the [Selenium Playground Table Search Demo](https://www.lambdatest.com/selenium-playground/table-sort-search-demo).
->    - Locates and interacts with the search box to search for "New York".
->    - Validates that the search results show **5 entries out of 24 total entries**.
-> 2. A brief **README** explaining the approach and how to run the script.
-> 3. Any additional setup instructions (e.g., local environment, dependencies, drivers etc).
+def test_table_sort_search_demo():
+    
+    driver = webdriver.Chrome()
+    driver.maximize_window()
 
-> [!TIP]
-> Use Python's `pytest` framework to structure your test cases.
+    try:
+        
+        URL = "https://www.lambdatest.com/selenium-playground/table-sort-search-demo"
+        driver.get(URL)
 
-> [!IMPORTANT]
-> - **Environment Setup:** Follow good coding practices and ensure the script is compatible with the latest stable Selenium version.
-> - **Browser Compatibility:** Test with at least one major browser (e.g., Chrome, Firefox).
+        
+        wait = WebDriverWait(driver, 10)
+        search_box = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#example_filter > label > input[type=search]")))
 
-> [!CAUTION]
-> - **Assertions:** Ensure all validations use robust assertion statements.
-> - **Code Quality:** Follow PEP8 standards for Python code.
+        
+        search_query = "software engineer"
+        search_box.send_keys(search_query)
+        print("successfully 1")
 
-**Good luck!**
+        search_query = "Auditor"
+        search_box.send_keys(search_query)
+        print("successfully 2")
+
+        search_query="Edinburgh	"
+        search_box.send_keys(search_query)
+        print("successfully 3")
+
+        search_query="Williamson"
+        search_box.send_keys(search_query)
+        print("successfully 4")
+
+        search_query="Senior Javascript Developer"
+        search_box.send_keys(search_query)
+        print("successfully 5")
+
+
+    finally:
+        
+        driver.quit()
